@@ -9,6 +9,9 @@ const Form = ()=>{
     let [tagColor, setTagColor] = useState("");
     let [imgUrl, setImgUrl] = useState("");
 
+    //adding  a property for pets related to checkbox feature
+    let [hasRabiesShot, setHasRabiesShot] = useState(false);
+
 
     //array called listOfPets where we can store every pet that gets submitted
     let [listOfPets, setListOfPets] = useState([]);
@@ -20,11 +23,43 @@ const Form = ()=>{
         console.log("form submitted!", name, age, tagColor, imgUrl);
 
         //put the pets information into an object (similar to dictionary in python)
-        let petObj = {name, age, tagColor, imgUrl};
-        console.log(petObj);
+        let petObj = {name, age, tagColor, imgUrl, hasRabiesShot};
 
         setListOfPets([...listOfPets,petObj]) //update the listOfPets array using its setter (setListOfPets) to be a copy of whatever is already in list of pet (...listOfPets) and add the recently submitted petObj to it (petObj)
+    }
 
+
+    //function to delete pet
+    const deletePet = (e,idx)=>{ 
+        //idx represents the index number of the pet we want to delete;
+        console.log("deleting pet at this index: ", idx);
+
+        //make a copy of our array of pets (industry best practice to not directly modify the state variable) & modify the copy (remove from the array the element at index number idx)
+        let filteredCopy = listOfPets.filter((pet, i)=>{
+            console.log("pet, i, and idx look like this", pet, i, idx);
+            return i!=idx //return back the pets whose index number does not match the index number we want to delete
+        })
+
+        //update the state variable to be the new copy using the setter (setListOfPets)
+        setListOfPets(filteredCopy);
+
+    }
+
+
+
+    //function to toggle rabies shot
+    const toggleRabies = (e, idx)=>{
+        // console.log("toggling the rabies. Logging e and idx ", e, idx);
+
+        //make a copy of our state variable array containing all the pets (listOfPets)
+        let copyOfPetList = [...listOfPets]
+        //to the copy, modify the pet at index number idx so that pet's hasRabiesShot property toggles to true to false, or from false to true
+        // console.log("copyOfPetList looks like this", copyOfPetList);
+
+        copyOfPetList[idx].hasRabiesShot = e.target.checked;
+
+        //update our state variable using the setter (setListOfPets)
+        setListOfPets(copyOfPetList);
     }
 
     return(
@@ -55,10 +90,16 @@ const Form = ()=>{
                 {
                     listOfPets.map((pet,idx)=>{
                         return(
-                            <div className="pet" style={{backgroundColor: pet.tagColor}}>
+                            <div key={idx} className="pet" style={{backgroundColor: pet.tagColor, fontFamily: pet.hasRabiesShot? "cursive": "monospace"}}>
                                 <h3>{pet.name}</h3>
+                                <h1>IDX is this {idx}</h1>
                                 <p>Age: {pet.age}</p>
                                 <p>Tag Color: {pet.tagColor}</p>
+                                <label>Check to mark down Rabies Shot</label>
+
+                                
+                                <input type="checkbox" onClick={(e)=>toggleRabies(e,idx)}/>
+                                <button onClick={(e)=>deletePet(e,idx)} className="btn btn-danger m-3">Delete Pet</button>
                                 <img src={pet.imgUrl} height="200px" />
                             </div>
                         )
