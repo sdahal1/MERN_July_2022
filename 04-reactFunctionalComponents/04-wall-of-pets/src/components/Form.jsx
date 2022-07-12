@@ -97,7 +97,7 @@ const Form = ()=>{
                                 <p>Tag Color: {pet.tagColor}</p>
                                 <label>Check to mark down Rabies Shot</label>
                                 
-                                <input type="checkbox" onClick={(e)=>toggleRabies(e,idx)}/>
+                                <input type="checkbox" onClick={(e)=>toggleRabies(e,idx)} checked={pet.hasRabiesShot}/>
                                 <button onClick={(e)=>deletePet(e,idx)} className="btn btn-danger m-3">Delete Pet</button>
                                 <img src={pet.imgUrl} height="200px" />
                             </div>
