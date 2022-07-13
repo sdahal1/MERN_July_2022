@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 import About from './components/About';
 import Players from './components/Players';
 import Teams from './components/Teams';
+import Form from './components/Form';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <h1>Routing Intro</h1>
       <NavBar></NavBar>
       <Routes>
-        <Route exact path="/" element={<h3>This is the home page</h3>}></Route>
+        <Route exact path="/" element={<><h3>This is the home page</h3> <Form></Form></>}></Route>
+  
         <Route exact path="/aboutus" element={<><About/><h1>Hi</h1></>}></Route>
         <Route exact path="/players" element={<Players/>}></Route>
         <Route exact path="/teams" element={<Teams/>}></Route>
