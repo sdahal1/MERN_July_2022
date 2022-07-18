@@ -14,9 +14,7 @@ app.use( express.json() );
 app.use( express.urlencoded({ extended: true }) );
 
 
-app.get("/api", (req,res)=>{
-    res.json({greeting:"hello mongoose demo"});
-})
+require("./server/routes/book.routes")(app) //import the routes so the server is aware of the routes we have built
 
 
 // this needs to be below the other code blocks
